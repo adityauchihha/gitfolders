@@ -1,3 +1,18 @@
+function isRepoListingPage() {
+    const path = window.location.pathname;
+    const urlParams = new URLSearchParams(window.location.search);
+    const pathParts = path.split('/').filter(Boolean);
+    
+    // Only true for:
+    // 1. /{username}?tab=repositories
+    // 2. /orgs/{orgname}/repositories
+    // Ensure we're not on a specific repository page
+    return (
+        (urlParams.get('tab') === 'repositories' && pathParts.length === 1) || // User's repository tab
+        (path.startsWith('/orgs/') && path.endsWith('/repositories')) // Organization repositories
+    ) && !path.includes('/tree/') && !path.includes('/blob/');
+}
+
 function createFolderInterface() {
     const folderInterface = document.createElement('div');
     folderInterface.className = 'folder-interface';
@@ -208,7 +223,7 @@ function handleFolderCreation(folderList) {
             const toggle = folder.querySelector('.folder-toggle');
             const repoList = folder.querySelector('.folder-repo-list');
             toggle.addEventListener('click', () => {
-                toggle.textContent = toggle.textContent === '▶' ? '▼' : '▶';
+                toggle.textContent = '▶' ? '▼' : '▶';
                 repoList.classList.toggle('collapsed');
             });
 
@@ -410,6 +425,8 @@ function moveExistingRepos(repoListElement, originalRepoList) {
 
 // Modify hideRepositories to handle the loading order correctly
 function hideRepositories() {
+    if (!isRepoListingPage()) return;
+
     const repoElements = document.querySelectorAll([
         '[data-filterable-for="your-repos-filter"]',
         '.js-responsive-underlinenav + div',
@@ -443,12 +460,18 @@ function hideRepositories() {
     });
 }
 
-// Run immediately and every 100ms for the first second
-hideRepositories();
-for (let i = 1; i <= 10; i++) {
-    setTimeout(hideRepositories, i * 100);
+// Only start if we're on a repo listing page
+if (isRepoListingPage()) {
+    hideRepositories();
+    for (let i = 1; i <= 10; i++) {
+        setTimeout(hideRepositories, i * 100);
+    }
 }
 
 // Monitor for dynamic content changes
-const observer = new MutationObserver(hideRepositories);
+const observer = new MutationObserver((mutations) => {
+    if (isRepoListingPage()) {
+        hideRepositories();
+    }
+});
 observer.observe(document.body, { childList: true, subtree: true });
