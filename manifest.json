@@ -2,12 +2,7 @@
     "manifest_version": 3,
     "name": "GitFolders",
     "version": "1.0",
-    "description": "Organize GitHub repositories into folders",
-    "icons": {
-        "16": "icons/gitfolder16.png",
-        "48": "icons/gitfolder48.png",
-        "128": "icons/gitfolder128.png"
-    },
+    "description": "Hides GitHub repositories and shows a custom message",
     "permissions": ["activeTab", "tabs", "storage"],
     "content_scripts": [
         {
