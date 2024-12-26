@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "GitFolders",
+    "version": "1.0",
+    "description": "Hides GitHub repositories and shows a custom message",
+    "permissions": ["activeTab", "tabs", "storage"],
+    "content_scripts": [
+        {
+            "matches": ["https://github.com/*"],
+            "js": ["content.js"],
+            "css": ["styles.css"]
+        }
+    ]
+}
