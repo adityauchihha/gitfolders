@@ -2,11 +2,17 @@
     "manifest_version": 3,
     "name": "GitFolders",
     "version": "1.0",
-    "description": "Hides GitHub repositories and shows a custom message",
+    "description": "Organize GitHub repositories into folders",
     "permissions": ["activeTab", "tabs", "storage"],
     "content_scripts": [
         {
-            "matches": ["https://github.com/*"],
+            "matches": [
+                "https://github.com/*?tab=repositories",
+                "https://github.com/orgs/*/repositories"
+            ],
+            "exclude_matches": [
+                "https://github.com/*/*"
+            ],
             "js": ["content.js"],
             "css": ["styles.css"]
         }
