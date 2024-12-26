@@ -11,7 +11,7 @@ function isRepoListingPage() {
         (urlParams.get('tab') === 'repositories' && pathParts.length === 1) || // User's repository tab
         (path.startsWith('/orgs/') && path.endsWith('/repositories')) // Organization repositories
     ) && !path.includes('/tree/') && !path.includes('/blob/');
-}//ihad to
+}
 
 function createFolderInterface() {
     const folderInterface = document.createElement('div');
