@@ -8,7 +8,7 @@
         "48": "icons/gitfolder48.png",
         "128": "icons/gitfolder128.png"
     },
-    "permissions": ["activeTab", "tabs", "storage"],
+    "permissions": ["storage"],
     "content_scripts": [
         {
             "matches": [
